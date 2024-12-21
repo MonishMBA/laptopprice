@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Price Prediction</title>
+    <style>
+        /* Reset some basic styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-y: auto; /* Allow scrolling */
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        select, input[type="number"], input[type="radio"] {
+            padding: 6px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        input[type="radio"] {
+            width: auto;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px; /* Make space between radio buttons */
+            align-items: center;
+        }
+
+        .radio-group label {
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 14px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 200px;
+            align-self: center; /* Center the predict button */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .prediction-result {
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .prediction-result h2 {
+            color: #4CAF50;
+        }
+
+        .prediction-result.hidden {
+            display: none;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr; /* Single column on smaller screens */
+            }
+
+            label, input[type="number"], select {
+                font-size: 12px;
+            }
+
+            input[type="submit"] {
+                padding: 8px;
+                font-size: 13px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Laptop Price Prediction</h1>
+        <form method="POST">
+            <!-- Dropdown for Company -->
+            <label for="Company">Company:</label>
+            <select id="Company" name="Company" required>
+                <option value="Apple">Apple</option>
+                <option value="HP">HP</option>
+                <option value="Acer">Acer</option>
+                <option value="Asus">Asus</option>
+                <option value="Dell">Dell</option>
+                <option value="Lenovo">Lenovo</option>
+                <option value="Others">Others</option>
+                <option value="MSI">MSI</option>
+                <option value="Microsoft">Microsoft</option>
+                <option value="Toshiba">Toshiba</option>
+                <option value="Razer">Razer</option>
+                <option value="Mediacom">Mediacom</option>
+                <option value="Samsung">Samsung</option>
+            </select>
+
+            <!-- Dropdown for Processor Brand -->
+            <label for="Processor_brand">Processor Brand:</label>
+            <select id="Processor_brand" name="Processor_brand" required>
+                <option value="Intel_Core i5">Intel_Core i5</option>
+                <option value="Intel_Core i7">Intel_Core i7</option>
+                <option value="AMD">AMD</option>
+                <option value="Intel_Core i3">Intel_Core i3</option>
+                <option value="Intel">Intel</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <!-- Dropdown for Processor Suffix -->
+            <label for="Processor_suffix">Processor Suffix:</label>
+            <select id="Processor_suffix" name="Processor_suffix" required>
+                <option value="M (Mobile)">M (Mobile)</option>
+                <option value="U (Ultra-low power)">U (Ultra-low power)</option>
+                <option value="HQ (High Performance Quad-core)">HQ (High Performance Quad-core)</option>
+                <option value="X (Extreme Performance)">X (Extreme Performance)</option>
+                <option value="K (Unlocked)">K (Unlocked)</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <!-- Dropdown for Memory Type -->
+            <label for="Memory Type">Memory Type:</label>
+            <select id="Memory Type" name="Memory Type" required>
+                <option value="SSD (Single or Multiple)">SSD (Single or Multiple)</option>
+                <option value="Flash Storage">Flash Storage</option>
+                <option value="HDD (Single or Combined)">HDD (Single or Combined)</option>
+                <option value="HDD + SSD">HDD + SSD</option>
+                <option value="Hybrid Storage">Hybrid Storage</option>
+                <option value="Flash Storage + HDD">Flash Storage + HDD</option>
+            </select>
+
+            <!-- Dropdown for GPU Category -->
+            <label for="Gpu_category">GPU Category:</label>
+            <select id="Gpu_category" name="Gpu_category" required>
+                <option value="Integrated GPUs">Integrated GPUs</option>
+                <option value="Entry-Level Discrete GPUs">Entry-Level Discrete GPUs</option>
+                <option value="Mid-Range Discrete GPUs">Mid-Range Discrete GPUs</option>
+                <option value="Older GPUs">Older GPUs</option>
+                <option value="High-End Discrete GPUs">High-End Discrete GPUs</option>
+                <option value="Workstation GPUs">Workstation GPUs</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+                <option value="Unknown">Unknown</option>
+            </select>
+
+            <!-- Dropdown for Operating System -->
+            <label for="OpSys">Operating System:</label>
+            <select id="OpSys" name="OpSys" required>
+                <option value="macOS">macOS</option>
+                <option value="Windows 10">Windows 10</option>
+                <option value="Windows 10 S">Windows 10 S</option>
+                <option value="Linux">Linux</option>
+                <option value="Android">Android</option>
+                <option value="Chrome OS">Chrome OS</option>
+                <option value="Windows 7">Windows 7</option>
+                <option value="Mac OS X">Mac OS X</option>
+                <option value="No OS">No OS</option>
+            </select>
+
+            <!-- Yes/No Input for Retina Display -->
+            <label for="Retina Display">Retina Display (Yes/No):</label>
+            <div class="radio-group">
+                <label for="retina_yes">Yes</label>
+                <input type="radio" id="retina_yes" name="Retina Display" value="1" required>
+                <label for="retina_no">No</label>
+                <input type="radio" id="retina_no" name="Retina Display" value="0" required>
+            </div>
+
+            <!-- Yes/No Input for IPS Panel -->
+            <label for="IPS Panel">IPS Panel (Yes/No):</label>
+            <div class="radio-group">
+                <label for="ips_yes">Yes</label>
+                <input type="radio" id="ips_yes" name="IPS Panel" value="1" required>
+                <label for="ips_no">No</label>
+                <input type="radio" id="ips_no" name="IPS Panel" value="0" required>
+            </div>
+
+            <!-- Yes/No Input for Touchscreen -->
+            <label for="Touchscreen">Touchscreen (Yes/No):</label>
+            <div class="radio-group">
+                <label for="touchscreen_yes">Yes</label>
+                <input type="radio" id="touchscreen_yes" name="Touchscreen" value="1" required>
+                <label for="touchscreen_no">No</label>
+                <input type="radio" id="touchscreen_no" name="Touchscreen" value="0" required>
+            </div>
+
+            <!-- Other fields like Inches, Clock Speed, etc. -->
+            <label for="Inches">Inches:</label>
+            <input type="number" step="0.1" id="Inches" name="Inches" required>
+
+            <label for="Clock_speed(GHz)">Clock Speed (GHz):</label>
+            <input type="number" step="0.01" id="Clock_speed(GHz)" name="Clock_speed(GHz)" required>
+
+            <label for="RAM(GB)">RAM (GB):</label>
+            <input type="number" id="RAM(GB)" name="RAM(GB)" required>
+
+            <label for="Memory Size (GB)">Memory Size (GB):</label>
+            <input type="number" id="Memory Size (GB)" name="Memory Size (GB)" required>
+
+            <label for="Weight(kg)">Weight (kg):</label>
+            <input type="number" step="0.01" id="Weight(kg)" name="Weight(kg)" required>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        <!-- Prediction Result (Initially Hidden) -->
+        <div class="prediction-result hidden">
+            <h2>The Price of the Laptop will be around: RS {{ predicted_price }}</h2>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to make prediction result appear after form submission
+        const resultDiv = document.querySelector('.prediction-result');
+        {% if predicted_price is not none %}
+            resultDiv.classList.remove('hidden');
+        {% endif %}
+    </script>
+</body>
+</html>
